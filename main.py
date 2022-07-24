@@ -70,7 +70,6 @@ def publish_sensor(client):
 
         msg = f"SensorValues: {sense_data['sense_hat']}"
         print(f"{msg}")
-        #sense.show_message(msg, scroll_speed=0.05, back_colour=bg)
         
         publish_result = client.publish(topic=f"{MACHINE_ID}", payload=json.dumps(sense_data))
         print(f"PublishResult: {publish_result}")
