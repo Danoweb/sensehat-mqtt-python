@@ -41,19 +41,34 @@ def publish_sensor(client):
     """
     #Get Sensor Data, Publish, Sleep until next update.
     while True:
+        # Atmosphere Data
         sense_temp = sense.get_temperature()
         sense_pressure = sense.get_pressure()
         sense_humidity = sense.get_humidity()
         #Convert to Farenheit
         sense_temp = ((sense_temp/5)*9)+32
         
+        # Gyroscope Data
+        gyro_pitch, gyro_roll, gyro_yaw = sense.get_orientation().values()
+        #print(f"pitch={gyro_pitch}, roll={gyro_roll}, yaw={gyro_yaw}")
+        
+        # Accelerometer Data
+        accel = sense.get_accelerometer_raw()
+        
+        # Package all Data into a Single Dict
         sense_data['sense_hat'] = {
-            "temperature": round(sense_temp, 1),
-            "pressure": round(sense_pressure, 1),
-            "humidity": round(sense_humidity, 1),
+            "temperature": round(sense_temp, 2),
+            "pressure": round(sense_pressure, 2),
+            "humidity": round(sense_humidity, 2),
+            "gyro_pitch": round(gyro_pitch, 2),
+            "gyro_roll": round(gyro_roll, 2),
+            "gyro_yaw": round(gyro_yaw, 2),
+            "accel_x": round(accel['x'], 2),
+            "accel_y": round(accel['y'], 2),
+            "accel_z": round(accel['z'], 2),
         }
 
-        msg = f"Temperature: {sense_data['sense_hat']['temperature']} Pressure: {sense_data['sense_hat']['pressure']} Humidity: {sense_data['sense_hat']['humidity']}"
+        msg = f"SensorValues: {sense_data['sense_hat']}"
         print(f"{msg}")
         #sense.show_message(msg, scroll_speed=0.05, back_colour=bg)
         
