@@ -1,0 +1,6 @@
+[Unit]
+Description=Sense Hat MQTT Publish via Python script
+After=multi-user.target[Service]
+Type=idle
+ExecStart=/usr/bin/python /home/pi/sensehat-mqtt-python/main.py[Install]
+WantedBy=multi-user.target
