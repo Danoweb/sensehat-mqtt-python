@@ -1,6 +1,14 @@
 [Unit]
 Description=Sense Hat MQTT Publish via Python script
-After=multi-user.target[Service]
-Type=idle
-ExecStart=/usr/bin/python /home/pi/sensehat-mqtt-python/main.py[Install]
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 main.py
+WorkingDirectory=/home/pi/sensehat-mqtt-python
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=root
+
+[Install]
 WantedBy=multi-user.target
